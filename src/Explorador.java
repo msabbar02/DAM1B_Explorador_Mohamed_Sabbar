@@ -1,3 +1,5 @@
+import javax.swing.*;
+
 public class Explorador {
     // costantes
     private final int ARRIBA = 1;
@@ -30,8 +32,22 @@ public class Explorador {
     // Metodo moverse
 
     public void moverse(int direccon){
-        switch (direccon){
-
+        if (direccon > 1 && direccon < 4){
+            switch (direccon){
+                case ARRIBA :
+                    if (posicionActual.getCoordenadaFila() > 0) posicionActual.setCoordenadaFila(posicionActual.getCoordenadaFila() - 1);
+                    break;
+                case ABAJO :
+                    if (posicionActual.getCoordenadaFila() < 5) posicionActual.setCoordenadaFila(posicionActual.getCoordenadaFila() + 1);
+                    break;
+                case DERECHA :
+                    if (posicionActual.getCoordenadaCol() < 19) posicionActual.setCoordenadaCol(posicionActual.getCoordenadaCol() + 1);
+                    break;
+                case IZQUIERDA :
+                    if (posicionActual.getCoordenadaCol() > 0) posicionActual.setCoordenadaCol(posicionActual.getCoordenadaCol() - 1);
+            }
+        }else {
+            JOptionPane.showMessageDialog(null,"Direccion no valida.","Error",JOptionPane.ERROR_MESSAGE);
         }
     }
 
