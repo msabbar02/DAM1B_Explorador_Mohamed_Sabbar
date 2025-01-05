@@ -1,16 +1,54 @@
+import java.util.Scanner;
+
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        Mapa mapa = new Mapa();
-        Explorador explorador = new Explorador("Jugador");
+        Scanner sc = new Scanner(System.in);;
+        System.out.println("                    **************************************");
+        System.out.println("                      Bienvenido al juego del Explorador");
+        System.out.println("                    **************************************");
+        System.out.print("introduce el nombre del Explorador: ");
+        String nombre = sc.nextLine();
+        Explorador explorador = new Explorador(nombre);
+        Mapa mapa = new Mapa(explorador.getPosicionActual());
 
-        Posicion posJugador = explorador.getPosicionActual();
-        mapa.getTablero()[posJugador.getCoordenadaFila()][posJugador.getCoordenadaCol()] = 'J';
 
-        System.out.println("                    ************************************");
-        System.out.println("                    Bienvenido al juego del Explorador");
-        System.out.println("                    ************************************");
-        mapa.mostrar();
-    }
+        boolean juegoEncurso = true;
+        while (juegoEncurso){
+            mapa.mostrar();
+            System.out.print("\nElige una direccion para moverte: ");
+            System.out.println("1.Arriba | 2.Abajo | 3.Derecha | 4.Izquierda");
+            int direccion = sc.nextInt();
+            Posicion antiguaPosicion = new Posicion(explorador.getPosicionActual().getCoordenadaFila(), explorador.getPosicionActual().getCoordenadaCol());
+            explorador.moverse(direccion);
+
+
+            char celda = mapa.getTablero()[explorador.getPosicionActual().getCoordenadaFila()][explorador.getPosicionActual().getCoordenadaCol()];
+            if (celda == 'T'){
+                System.out.println("\u001B[31m has caido en una trampa . Has perdido.\u001B[0m");
+                juegoEncurso = false;
+                continue;
+            } else if (celda == 'E' || celda == '*') {
+                System.out.println("\u001B[31m¡Un enemigo te atrapó! Has perdido.\u001B[0m");
+                juegoEncurso = false;
+                continue;
+            } else if (antiguaPosicion.equals(mapa.getPosTesoro())) {
+                System.out.println("\u001B[32m¡Felicidades! Has encontrado el tesoro. ¡Has ganado!\u001B[0m");
+                juegoEncurso = false;
+                continue;
+            }
+            for (Enemigo enemigo : mapa.getListadoEnemigos()) {
+                if (enemigo.getPosicionActual().equals(explorador.getPosicionActual())) {
+                    System.out.println("\u001B[31mUn enemigo te atrapó después de moverse. Has perdido.\u001B[0m");
+                    juegoEncurso = false;
+                    break;
+                }
+            }
+            mapa.actualizarExplorador(antiguaPosicion);
+        }
+
+        System.out.println("Gracias por jugar.");
+        }
+
 }
