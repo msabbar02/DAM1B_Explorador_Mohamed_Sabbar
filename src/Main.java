@@ -5,9 +5,9 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);;
-        System.out.println("                    **************************************");
-        System.out.println("                      Bienvenido al juego del Explorador");
-        System.out.println("                    **************************************");
+        System.out.println("                   \u001B[33m **************************************");
+        System.out.println("                     \u001B[33m Bienvenido al juego del Explorador");
+        System.out.println("                    \u001B[33m**************************************\u001B[0m");
         System.out.print("introduce el nombre del Explorador: ");
         String nombre = sc.nextLine();
         Explorador explorador = new Explorador(nombre);
@@ -18,7 +18,7 @@ public class Main {
         while (juegoEncurso){
             mapa.mostrar();
             System.out.print("\nElige una direccion para moverte: ");
-            System.out.println("1.Arriba | 2.Abajo | 3.Derecha | 4.Izquierda");
+            System.out.println("\u001B[31m1.Arriba\u001B[0m | \u001B[32m2.Abajo\u001B[0m | \u001B[33m3.Derecha\u001B[0m | \u001B[34m4.Izquierda");
             int direccion = sc.nextInt();
             Posicion antiguaPosicion = new Posicion(explorador.getPosicionActual().getCoordenadaFila(), explorador.getPosicionActual().getCoordenadaCol());
             explorador.moverse(direccion);
@@ -29,7 +29,7 @@ public class Main {
                 System.out.println("\u001B[31m has caido en una trampa . Has perdido.\u001B[0m");
                 juegoEncurso = false;
                 continue;
-            } else if (celda == 'E' || celda == '*') {
+            } else if (celda == 'E') {
                 System.out.println("\u001B[31m¡Un enemigo te atrapó! Has perdido.\u001B[0m");
                 juegoEncurso = false;
                 continue;
