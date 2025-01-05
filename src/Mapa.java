@@ -1,4 +1,3 @@
-import java.awt.*;
 import java.util.Random;
 
 public class Mapa {
@@ -10,7 +9,7 @@ public class Mapa {
     private Posicion [] posicionTramapas;
 
     //Constructor
-    public Mapa(){
+    public Mapa(Posicion posJugador){
 
         tablero = new char[6][20];
         for (int i = 0; i < 6; i++) {
@@ -43,8 +42,14 @@ public class Mapa {
                 enemigo = new Enemigo();
             }while (tablero[enemigo.getPosicionActual().getCoordenadaFila()][enemigo.getPosicionActual().getCoordenadaCol()] != ' ');
             listadoEnemigos[i] = enemigo;
+            enemigo.moverse();
             tablero[enemigo.getPosicionActual().getCoordenadaFila()][enemigo.getPosicionActual().getCoordenadaCol()] = 'E';
         }
+
+        this.posJugador = posJugador;
+        tablero[posJugador.getCoordenadaFila()][posJugador.getCoordenadaCol()] = 'J';
+
+
     }
     // Getters Y Setters
     public char[][] getTablero() {
@@ -55,18 +60,44 @@ public class Mapa {
         return posTesoro;
     }
 
+    public Enemigo[] getListadoEnemigos() {
+        return listadoEnemigos;
+    }
     // metodo Mostrar
 
     public void mostrar(){
         for (int i = 0; i < 6; i++) {
             System.out.println("----------------------------------------------------------------------------------");
             for (int j = 0; j < 20; j++) {
-                System.out.print("| "+ tablero[i][j] + " ");
+                char c = tablero[i][j];
+                String color;
+                switch(c){
+                    case 'J': color = "\u001B[34m";break;
+                    case 'T': color = "\u001B[32m";break;
+                    case 'E': color = "\u001B[33m";break;
+                    case '*': color = "\u001B[31m";break;
+                    default:color = "\u001B[0m";
+                }
+                System.out.print("\u001B[35m | " + color + c + "\u001B[0m");
             }
             System.out.println(" |");
         }
-        System.out.println("-----------------------------------------------------------------------------------");
+        System.out.println("----------------------------------------------------------------------------------");
     }
+
+    public boolean actualizarExplorador(Posicion antiguaPosicion) {
+        if (tablero[antiguaPosicion.getCoordenadaFila()][antiguaPosicion.getCoordenadaCol()] == 'T' ||
+                tablero[antiguaPosicion.getCoordenadaFila()][antiguaPosicion.getCoordenadaCol()] == 'E' ||
+                tablero[antiguaPosicion.getCoordenadaFila()][antiguaPosicion.getCoordenadaCol()] == '*') {
+            return false; // Juego terminado
+        }
+        tablero[antiguaPosicion.getCoordenadaFila()][antiguaPosicion.getCoordenadaCol()] = ' ';
+        tablero[posJugador.getCoordenadaFila()][posJugador.getCoordenadaCol()] = 'J';
+        return true;
+
+    }
+
+
 
 
 }
