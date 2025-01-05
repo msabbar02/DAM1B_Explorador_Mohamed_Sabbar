@@ -92,8 +92,7 @@ public class Mapa {
             tablero[enemigo.getPosicionActual().getCoordenadaFila()][enemigo.getPosicionActual().getCoordenadaCol()] = 'E';
         }
         if (tablero[antiguaPosicion.getCoordenadaFila()][antiguaPosicion.getCoordenadaCol()] == 'T' ||
-                tablero[antiguaPosicion.getCoordenadaFila()][antiguaPosicion.getCoordenadaCol()] == 'E' ||
-                tablero[antiguaPosicion.getCoordenadaFila()][antiguaPosicion.getCoordenadaCol()] == '*') {
+                tablero[antiguaPosicion.getCoordenadaFila()][antiguaPosicion.getCoordenadaCol()] == 'E'){
             return false; // Juego terminado
         }
         tablero[antiguaPosicion.getCoordenadaFila()][antiguaPosicion.getCoordenadaCol()] = ' ';
