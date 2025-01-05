@@ -42,7 +42,6 @@ public class Mapa {
                 enemigo = new Enemigo();
             }while (tablero[enemigo.getPosicionActual().getCoordenadaFila()][enemigo.getPosicionActual().getCoordenadaCol()] != ' ');
             listadoEnemigos[i] = enemigo;
-            enemigo.moverse();
             tablero[enemigo.getPosicionActual().getCoordenadaFila()][enemigo.getPosicionActual().getCoordenadaCol()] = 'E';
         }
 
@@ -86,6 +85,12 @@ public class Mapa {
     }
 
     public boolean actualizarExplorador(Posicion antiguaPosicion) {
+        for (int i = 0; i < listadoEnemigos.length; i++) {
+            Enemigo enemigo = listadoEnemigos[i];
+            tablero[enemigo.getPosicionActual().getCoordenadaFila()][enemigo.getPosicionActual().getCoordenadaCol()] = ' ';
+            listadoEnemigos[i].moverse();
+            tablero[enemigo.getPosicionActual().getCoordenadaFila()][enemigo.getPosicionActual().getCoordenadaCol()] = 'E';
+        }
         if (tablero[antiguaPosicion.getCoordenadaFila()][antiguaPosicion.getCoordenadaCol()] == 'T' ||
                 tablero[antiguaPosicion.getCoordenadaFila()][antiguaPosicion.getCoordenadaCol()] == 'E' ||
                 tablero[antiguaPosicion.getCoordenadaFila()][antiguaPosicion.getCoordenadaCol()] == '*') {
@@ -93,6 +98,7 @@ public class Mapa {
         }
         tablero[antiguaPosicion.getCoordenadaFila()][antiguaPosicion.getCoordenadaCol()] = ' ';
         tablero[posJugador.getCoordenadaFila()][posJugador.getCoordenadaCol()] = 'J';
+
         return true;
 
     }
