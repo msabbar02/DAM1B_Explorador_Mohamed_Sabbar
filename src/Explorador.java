@@ -4,8 +4,8 @@ public class Explorador {
     // costantes
     private final int ARRIBA = 1;
     private final int ABAJO = 2;
-    private final int DERECHA = 4;
-    private final int IZQUIERDA = 3;
+    private final int DERECHA = 3;
+    private final int IZQUIERDA = 4;
 
     // atributos
     private String nombre ;
@@ -33,7 +33,7 @@ public class Explorador {
     // Metodo moverse
 
     public void moverse(int direccion){
-        if (direccion > 1 && direccion < 4){
+        if (direccion >= 1 && direccion <= 4){
             switch (direccion){
                 case ARRIBA :
                     if (posicionActual.getCoordenadaFila() > 0) posicionActual.setCoordenadaFila(posicionActual.getCoordenadaFila() - 1);
